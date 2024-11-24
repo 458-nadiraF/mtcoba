@@ -1,2 +1,1 @@
-metatrader5==5.0.4687
 python-dotenv==1.0.0
