@@ -2,7 +2,7 @@ from http.server import BaseHTTPRequestHandler
 import json
 import requests
 import traceback
-
+import os
 class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -14,7 +14,7 @@ class handler(BaseHTTPRequestHandler):
     def get_account_balance(self):
         headers = {
             'Accept': 'application/json',
-            'auth-token': process.env.METAAPI_TOKEN  # Replace with your actual token
+            'auth-token': os.getenv.METAAPI_TOKEN  # Replace with your actual token
         }
         
         try:
