@@ -63,7 +63,7 @@ class handler(BaseHTTPRequestHandler):
                "actionType": "ORDER_TYPE_BUY",
                "volume": lot,
                "stopLoss": sl,
-               "takeProfit": int(tp),
+               "takeProfit": float(tp),
                "stopLossUnits": "ABSOLUTE_PRICE",
                "takeProfitUnits": "ABSOLUTE_PRICE"
             }
