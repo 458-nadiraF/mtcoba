@@ -14,7 +14,7 @@ class handler(BaseHTTPRequestHandler):
     def get_account_balance(self):
         headers = {
             'Accept': 'application/json',
-            'auth-token': os.getenv.METAAPI_TOKEN  # Replace with your actual token
+            'auth-token': os.getenv('METAAPI_TOKEN')  # Replace with your actual token
         }
         
         try:
