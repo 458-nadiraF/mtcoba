@@ -37,10 +37,17 @@ class handler(BaseHTTPRequestHandler):
         # terima alert dr tv
       
         try:
-            # Parse the received JSON data
-            # Get the content length to read the request body
-            length = int(self.headers.getheader('content-length'))
-            received_json = json.loads(self.rfile.read(length))
+           content_length = int(self.headers.get('Content-Length', 0))  # Default to 0 if not present
+            if content_length > 0:
+                post_data = self.rfile.read(content_length).decode('utf-8')  # Decode bytes to string
+            else:
+                post_data = ""  # No data sent
+            
+            if not post_data.strip():  # Check if the body is empty or whitespace
+                raise ValueError("Empty request body")
+            
+            # Parse JSON
+            data = json.loads(post_data)
             #received_json = json.loads(post_data.decode('utf-8'))
             lot=received_json.get('lot')
             sl=received_json.get('sl')
