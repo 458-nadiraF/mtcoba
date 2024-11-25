@@ -47,7 +47,7 @@ class handler(BaseHTTPRequestHandler):
                 raise ValueError("Empty request body")
             
             # Parse JSON
-            data = json.loads(post_data)
+            received_json = json.loads(post_data)
             #received_json = json.loads(post_data.decode('utf-8'))
             lot=received_json.get('lot')
             sl=received_json.get('sl')
