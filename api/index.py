@@ -41,7 +41,7 @@ class handler(BaseHTTPRequestHandler):
             # Get the content length to read the request body
             content_length = int(self.headers.get('Content-Length', 0))
             post_data = self.rfile.read(content_length).decode('utf-8')
-            data = json.loads(post_data)
+            #data = json.loads(post_data)
             received_json = post_data.json()
             #received_json = json.loads(post_data.decode('utf-8'))
             lot=received_json.get('lot')
