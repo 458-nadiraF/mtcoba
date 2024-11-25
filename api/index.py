@@ -81,7 +81,7 @@ class handler(BaseHTTPRequestHandler):
             # Send POST request to the specified API
             headers = {
                 'Accept': 'application/json',
-                'auth-token':process.env.METAAPI_TOKEN,
+                'auth-token':os.getenv('METAAPI_TOKEN'),
                 'Content-Type':'application/json'
                 # Add any other required headers here
             }
