@@ -37,7 +37,7 @@ class handler(BaseHTTPRequestHandler):
         # terima alert dr tv
       
         try:
-           content_length = int(self.headers.get('Content-Length', 0))  # Default to 0 if not present
+            content_length = int(self.headers.get('Content-Length', 0))  # Default to 0 if not present
             if content_length > 0:
                 post_data = self.rfile.read(content_length).decode('utf-8')  # Decode bytes to string
             else:
