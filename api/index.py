@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler
 import json
 import requests
+import traceback
 
 class handler(BaseHTTPRequestHandler):
 
@@ -108,6 +109,7 @@ class handler(BaseHTTPRequestHandler):
                 "error": str(e),
                 "message": "Error processing request"
             }
+            traceback.print_exc()
             self.wfile.write(json.dumps(error_response).encode())
         
         
