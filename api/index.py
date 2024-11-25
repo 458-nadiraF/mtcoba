@@ -34,30 +34,51 @@ class handler(BaseHTTPRequestHandler):
             return None
     def do_POST(self):
         # terima alert dr tv
-        self.send_response(200)
-        self.send_header('Content-Type', 'application/json')
-        self.end_headers()
-        self.wfile.write(json.dumps({"message": "POST received"}).encode())
+      
         try:
             # Parse the received JSON data
-            received_json = json.loads(post_data.decode('utf-8'))
+            received_json = post_data.json()
+            #received_json = json.loads(post_data.decode('utf-8'))
+            lot=received_json.get('lot')
+            sl=received_json.get('sl')
+            tp=received_json.get('tp')
+            symbol=received_json.get('symbol')
+            
             balance=get_account_balance()
             # Define the API endpoint where you want to forward the request
             forward_url = "https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/07a8b605-7615-44cc-95aa-7204ff910e22/trade"  # Replace with your actual API endpoint
-
-
-            #get account balance
             
+            buy_json={
+               "symbol": symbol,
+               "actionType": "ORDER_TYPE_BUY",
+               "volume": lot,
+               "stopLoss": sl,
+               "takeProfit": tp,
+               "stopLossUnits": "ABSOLUTE_PRICE",
+               "takeProfitUnits": "ABSOLUTE_PRICE"
+            }
+            #get account balance
+            #contoh json
+            # {
+            #   "symbol": "EURUSD",
+            #   "actionType": "ORDER_TYPE_BUY",
+            #   "volume": 0.01,
+            #   "stopLoss": 1.030,
+            #   "takeProfit": 1.06,
+            #   "stopLossUnits": "ABSOLUTE_PRICE",
+            #   "takeProfitUnits": "ABSOLUTE_PRICE"
+            # }
             # Send POST request to the specified API
             headers = {
                 'Accept': 'application/json',
-                'auth-token':process.env.METAAPI_TOKEN
+                'auth-token':process.env.METAAPI_TOKEN,
+                'Content-Type':'application/json'
                 # Add any other required headers here
             }
             
             response = requests.post(
                 forward_url,
-                json=received_json,
+                json=buy_json,
                 headers=headers
             )
             
@@ -72,7 +93,6 @@ class handler(BaseHTTPRequestHandler):
                 "forward_status": response.status_code,
                 "forward_response": response.json()  # Include this if you want to return the forwarded API's response
             }
-            
             self.wfile.write(json.dumps(response_data).encode())
             
         except Exception as e:
