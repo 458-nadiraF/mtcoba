@@ -3,6 +3,8 @@ import json
 import requests
 import traceback
 import os
+import time
+LOG_FILE_PATH = "../logs.txt"
 class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -37,6 +39,7 @@ class handler(BaseHTTPRequestHandler):
         # terima alert dr tv
       
         try:
+            start_time = time.time()
             content_length = int(self.headers.get('Content-Length', 0))  # Default to 0 if not present
             if content_length > 0:
                 post_data = self.rfile.read(content_length).decode('utf-8')  # Decode bytes to string
@@ -92,6 +95,8 @@ class handler(BaseHTTPRequestHandler):
                 headers=headers
             )
             
+            execution_duration = (time.time() - start_time) * 1000
+            timestamp=timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             # Send response back to the original client
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
@@ -104,6 +109,13 @@ class handler(BaseHTTPRequestHandler):
                 "forward_response": response.json()  # Include this if you want to return the forwarded API's response
             }
             self.wfile.write(json.dumps(response_data).encode())
+            log_message = (
+                f"{timestamp} - Execution Duration: {execution_duration}ms\n"
+                f"Response Content: {response_data}\n"
+                "-------------------------------------------\n"
+            )
+            with open(LOG_FILE_PATH, "a") as log_file:
+                log_file.write(log_message)
             
         except Exception as e:
             # Handle any errors
