@@ -106,6 +106,7 @@ class handler(BaseHTTPRequestHandler):
             response_data = {
                 "message": "POST received and forwarded",
                 "forward_status": response.status_code,
+                "received_json":received_json,
                 "forward_response": response.json()  # Include this if you want to return the forwarded API's response
             }
             self.wfile.write(json.dumps(response_data).encode())
