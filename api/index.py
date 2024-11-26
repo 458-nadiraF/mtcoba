@@ -55,7 +55,7 @@ class handler(BaseHTTPRequestHandler):
             lot=received_json.get('lot')
             sl=received_json.get('sl')
             tp=received_json.get('tp')
-            symbol=received_json.get('symbol')
+            symbol=received_json.get('Symbol')
             
             balance=self.get_account_balance()
             # Define the API endpoint where you want to forward the request
