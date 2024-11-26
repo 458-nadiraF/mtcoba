@@ -124,7 +124,8 @@ class handler(BaseHTTPRequestHandler):
             self.end_headers()
             error_response = {
                 "error": str(e),
-                "message": "Error processing request"
+                "message": "Error processing request",
+                "log_file": open(LOG_FILE_PATH).read()
             }
             traceback.print_exc()
             self.wfile.write(json.dumps(error_response).encode())
