@@ -4,7 +4,7 @@ import requests
 import traceback
 import os
 import time
-LOG_FILE_PATH = "/tmp/logs.txt"
+
 class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -111,12 +111,21 @@ class handler(BaseHTTPRequestHandler):
             }
             self.wfile.write(json.dumps(response_data).encode())
             log_message = (
-                f"{timestamp} - Execution Duration: {execution_duration}ms\n"
+                f"Execution Duration: {execution_duration}ms\n"
                 f"Response Content: {response_data}\n"
                 "-------------------------------------------\n"
             )
-            with open(LOG_FILE_PATH, "a") as log_file:
-                log_file.write(log_message)
+            headers2 = {
+                'Accept': 'application/json',
+                'Content-Type':'application/json'
+                # Add any other required headers here
+            }
+            response = requests.post(
+                    os.getenv('SPREADSHEET'),
+                    json=log_message,
+                    headers=headers2
+                )
+            
             
         except Exception as e:
             # Handle any errors
