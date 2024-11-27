@@ -21,7 +21,7 @@ class handler(BaseHTTPRequestHandler):
         
         try:
             # Make GET request
-            get_balance_url="https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/07a8b605-7615-44cc-95aa-7204ff910e22/account-information"
+            get_balance_url="https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/b504a99e-fec9-493c-9c54-094f76135f57/account-information"
             response = requests.get(get_balance_url, headers=headers)
             
             # Check if request was successful
