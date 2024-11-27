@@ -60,11 +60,11 @@ class handler(BaseHTTPRequestHandler):
             balance=self.get_account_balance()
             # Define the API endpoint where you want to forward the request
             forward_url = "https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/b504a99e-fec9-493c-9c54-094f76135f57/trade"  # Replace with your actual API endpoint
-            
+            balance2= float(balance) 
             buy_json={
                "symbol": symbol,
                "actionType": "ORDER_TYPE_BUY",
-               "volume": lot,
+               "volume": lot*balance2,
                "stopLoss": sl,
                "takeProfit": float(tp),
                "stopLossUnits": "ABSOLUTE_PRICE",
@@ -107,6 +107,7 @@ class handler(BaseHTTPRequestHandler):
                 "message": "POST received and forwarded",
                 "forward_status": response.status_code,
                 "received_json":received_json,
+                "buy_json": buy_json, 
                 "forward_response": response.json()  # Include this if you want to return the forwarded API's response
             }
             self.wfile.write(json.dumps(response_data).encode())
