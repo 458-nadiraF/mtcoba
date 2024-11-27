@@ -64,7 +64,7 @@ class handler(BaseHTTPRequestHandler):
             buy_json={
                "symbol": symbol,
                "actionType": "ORDER_TYPE_BUY",
-               "volume": lot*balance2,
+               "volume": round(lot*balance2, 2),
                "stopLoss": sl,
                "takeProfit": float(tp),
                "takeProfitUnits": "ABSOLUTE_PRICE"
