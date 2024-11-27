@@ -67,7 +67,6 @@ class handler(BaseHTTPRequestHandler):
                "volume": lot*balance2,
                "stopLoss": sl,
                "takeProfit": float(tp),
-               "stopLossUnits": "ABSOLUTE_PRICE",
                "takeProfitUnits": "ABSOLUTE_PRICE"
             }
             #get account balance
