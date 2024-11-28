@@ -21,7 +21,7 @@ class handler(BaseHTTPRequestHandler):
         
         try:
             # Make GET request
-            get_balance_url="https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/b504a99e-fec9-493c-9c54-094f76135f57/account-information"
+            get_balance_url=f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/{os.getenv('ACCOUNT_ID')}/account-information"
             response = requests.get(get_balance_url, headers=headers)
             
             # Check if request was successful
@@ -40,6 +40,7 @@ class handler(BaseHTTPRequestHandler):
       
         try:
             start_time = time.time()
+            acc_id=os.getenv("ACCOUNT_ID")
             content_length = int(self.headers.get('Content-Length', 0))  # Default to 0 if not present
             if content_length > 0:
                 post_data = self.rfile.read(content_length).decode('utf-8')  # Decode bytes to string
@@ -59,7 +60,7 @@ class handler(BaseHTTPRequestHandler):
             
             balance=self.get_account_balance()
             # Define the API endpoint where you want to forward the request
-            forward_url = "https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/b504a99e-fec9-493c-9c54-094f76135f57/trade"  # Replace with your actual API endpoint
+            forward_url = f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/{os.getenv('ACCOUNT_ID')}/trade"  # Replace with your actual API endpoint
             balance2= float(balance) 
             buy_json={
                "symbol": symbol,
