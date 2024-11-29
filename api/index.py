@@ -16,18 +16,17 @@ class handler(BaseHTTPRequestHandler):
     def get_account_balance(self):
         headers = {
             'Accept': 'application/json',
-            'auth-token': os.getenv('METAAPI_TOKEN')  # Replace with your actual token
+            'auth-token': os.getenv('METAAPI_TOKEN')  
         }
         
         try:
-            # Make GET request
             get_balance_url=f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/6d01a31f-1091-448d-a8eb-549f2e743e67/account-information"
             response = requests.get(get_balance_url, headers=headers)
             
             # Check if request was successful
             if response.status_code == 200:
                 data = response.json()
-                return data.get('balance')  # Returns the balance value
+                return data.get('balance')  
             else:
                 print(f"Error: API request failed with status code {response.status_code}")
                 return None
@@ -40,7 +39,6 @@ class handler(BaseHTTPRequestHandler):
       
         try:
             start_time = time.time()
-            acc_id=os.getenv("ACCOUNT_ID")
             content_length = int(self.headers.get('Content-Length', 0))  # Default to 0 if not present
             if content_length > 0:
                 post_data = self.rfile.read(content_length).decode('utf-8')  # Decode bytes to string
@@ -70,18 +68,7 @@ class handler(BaseHTTPRequestHandler):
                "takeProfit": float(tp),
                "takeProfitUnits": "ABSOLUTE_PRICE"
             }
-            #get account balance
-            #contoh json
-            # {
-            #   "symbol": "EURUSD",
-            #   "actionType": "ORDER_TYPE_BUY",
-            #   "volume": 0.01,
-            #   "stopLoss": 1.030,
-            #   "takeProfit": 1.06,
-            #   "stopLossUnits": "ABSOLUTE_PRICE",
-            #   "takeProfitUnits": "ABSOLUTE_PRICE"
-            # }
-            # Send POST request to the specified API
+            
             headers = {
                 'Accept': 'application/json',
                 'auth-token':os.getenv('METAAPI_TOKEN'),
