@@ -13,14 +13,14 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write('Hello, world!'.encode('utf-8'))
         return
-    def get_account_balance(self):
+    def get_account_balance(self,token, account):
         headers = {
             'Accept': 'application/json',
-            'auth-token': os.getenv('METAAPI_TOKEN')  
+            'auth-token': token 
         }
         
         try:
-            get_balance_url=f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/6d01a31f-1091-448d-a8eb-549f2e743e67/account-information"
+            get_balance_url=f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/{account}/account-information"
             response = requests.get(get_balance_url, headers=headers)
             
             # Check if request was successful
@@ -55,10 +55,11 @@ class handler(BaseHTTPRequestHandler):
             sl=received_json.get('sl')
             tp=received_json.get('tp')
             symbol=received_json.get('Symbol')
-            
-            balance=self.get_account_balance()
+            account=os.getenv('ACCOUNT_ID')
+            token=os.getenv('METAAPI_TOKEN')
+            balance=self.get_account_balance(token, account)
             # Define the API endpoint where you want to forward the request
-            forward_url = f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/6d01a31f-1091-448d-a8eb-549f2e743e67/trade"  # Replace with your actual API endpoint
+            forward_url = f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/{account}/trade"  # Replace with your actual API endpoint
             balance2= float(balance) 
             buy_json={
                "symbol": symbol,
@@ -71,7 +72,7 @@ class handler(BaseHTTPRequestHandler):
             
             headers = {
                 'Accept': 'application/json',
-                'auth-token':os.getenv('METAAPI_TOKEN'),
+                'auth-token':token,
                 'Content-Type':'application/json'
                 # Add any other required headers here
             }
