@@ -55,15 +55,21 @@ class handler(BaseHTTPRequestHandler):
             sl=received_json.get('sl')
             tp=received_json.get('tp')
             symbol=received_json.get('Symbol')
+            add=received_json.get('add')
             account=os.getenv('ACCOUNT_ID')
             token=os.getenv('METAAPI_TOKEN')
             balance=self.get_account_balance(token, account)
             # Define the API endpoint where you want to forward the request
             forward_url = f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/{account}/trade"  # Replace with your actual API endpoint
             balance2= float(balance) 
+            actType=""
+            if(add=="buy"):
+                actType="ORDER_TYPE_BUY"
+            else:
+                actType="ORDER_TYPE_SELL"
             buy_json={
                "symbol": symbol,
-               "actionType": "ORDER_TYPE_BUY",
+               "actionType": actType,
                "volume": round(lot*balance2, 2),
                "stopLoss": sl,
                "takeProfit": float(tp),
