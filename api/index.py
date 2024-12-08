@@ -4,7 +4,7 @@ import requests
 import traceback
 import os
 import time
-
+LOG_FILE_PATH = "/tmp/logs.txt"
 class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
