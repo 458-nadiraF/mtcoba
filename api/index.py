@@ -63,8 +63,8 @@ class handler(BaseHTTPRequestHandler):
             symbol=received_json.get('Symbol')
             add=received_json.get('add')
             accountName=received_json.get('account')
-            accountStr=f'ACCOUNT_ID_{lower(accountName)}'
-            tokenStr=f'METAAPI_TOKEN_{lower(accountName)}'
+            accountStr=f'ACCOUNT_ID_{accountName}'
+            tokenStr=f'METAAPI_TOKEN_{accountName}'
             account=os.getenv(accountStr)
             token=os.getenv(tokenStr)
             if symbol[-1]=='m':
