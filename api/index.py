@@ -62,8 +62,11 @@ class handler(BaseHTTPRequestHandler):
             tp=received_json.get('tp')
             symbol=received_json.get('Symbol')
             add=received_json.get('add')
-            account=os.getenv('ACCOUNT_ID')
-            token=os.getenv('METAAPI_TOKEN')
+            accountName=received_json.get('account')
+            accountStr=f'ACCOUNT_ID_{lower(accountName)}'
+            tokenStr=f'METAAPI_TOKEN_{lower(accountName)}'
+            account=os.getenv(accountStr)
+            token=os.getenv(tokenStr)
             if symbol[-1]=='m':
                 symbol=symbol[0:-1]
             balance=self.get_account_balance(token, account)
