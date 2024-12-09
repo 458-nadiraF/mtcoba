@@ -34,7 +34,7 @@ class handler(BaseHTTPRequestHandler):
                 data = response.json()
                 return data.get('balance')  
             else:
-                print(f"Error: API request failed with status code {response.status_code}")
+                print(f"Error: API request for get balance failed with status code {response.status_code}")
                 return None
                 
         except Exception as e:
@@ -127,7 +127,11 @@ class handler(BaseHTTPRequestHandler):
                     json=log_message,
                     headers=headers2
                 )
-            
+            if response.status_code == 200:
+                return None
+            else:
+                print(f"Error: API request for placing order failed with status code {response.status_code}")
+                return None
             
         except Exception as e:
             # Handle any errors
