@@ -67,7 +67,7 @@ class handler(BaseHTTPRequestHandler):
             tokenStr=f'METAAPI_TOKEN_{accountName}'
             account=os.getenv(accountStr)
             token=os.getenv(tokenStr)
-            if accountStr=='masnur':
+            if accountStr=="masnur":
                 if symbol[-1]!='m' :
                     symbol=f'{symbol}m'
             else:
