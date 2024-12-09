@@ -58,6 +58,8 @@ class handler(BaseHTTPRequestHandler):
             add=received_json.get('add')
             account=os.getenv('ACCOUNT_ID')
             token=os.getenv('METAAPI_TOKEN')
+            if symbol[-1]=='m':
+                symbol=symbol[0:-1]
             balance=self.get_account_balance(token, account)
             # Define the API endpoint where you want to forward the request
             forward_url = f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/{account}/trade"  # Replace with your actual API endpoint
