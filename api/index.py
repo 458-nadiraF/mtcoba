@@ -135,7 +135,7 @@ class handler(BaseHTTPRequestHandler):
                 if(add=="buy"):
                     actType="ORDER_TYPE_BUY"
                     buy_json2={
-                       "symbol": symbol,
+                       "symbol": symbol[0:-1],
                        "actionType": actType,
                        "volume": round(lot*balance22, 2),
                        "stopLoss": sl,
