@@ -134,21 +134,16 @@ class handler(BaseHTTPRequestHandler):
                 actType=""
                 if(add=="buy"):
                     actType="ORDER_TYPE_BUY"
-                    buy_json2={
+                else:
+                    actType="ORDER_TYPE_SELL"
+                buy_json2={
                        "symbol": symbol[0:-1],
                        "actionType": actType,
-                       "volume": round(lot*balance22, 2),
+                       "volume": round(lot*balance22*0.01, 2),
                        "stopLoss": sl,
                        "takeProfit": float(tp),
                        "takeProfitUnits": "ABSOLUTE_PRICE"
                     }
-                else:
-                    actType="POSITIONS_CLOSE_SYMBOL"
-                    buy_json2={
-                        "symbol":symbol,
-                        "actionType":actType
-                    }
-                
                 headers22 = {
                     'Accept': 'application/json',
                     'auth-token':token2,
