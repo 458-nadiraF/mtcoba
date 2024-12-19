@@ -35,6 +35,7 @@ class handler(BaseHTTPRequestHandler):
                 return data.get('balance')  
             else:
                 print(f"Error: API request for get balance failed with status code {response.status_code}")
+                print(response) 
                 return None
                 
         except Exception as e:
