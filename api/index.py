@@ -115,20 +115,34 @@ class handler(BaseHTTPRequestHandler):
             self.end_headers()
             
             # You can customize the response based on the forwarded request's response
+            tele_url=os.getenv('TELEGRAM_API')
+            timestamp=timestamp = time.strftime("%m/%d/%Y %H:%M:%S", time.localtime())
             response_data = {
                 "message": "POST received and forwarded",
                 "forward_status": response.status_code,
                 "received_json":received_json,
                 "buy_json": buy_json, 
-                "forward_response": response.json()  # Include this if you want to return the forwarded API's response
+                "forward_response": response.json()# Include this if you want to return the forwarded API's response
             }
             self.wfile.write(json.dumps(response_data).encode())
            
             log_message = (
-                f" MTReal1. Execution Duration: {execution_duration}ms\n"
+                f" MTCoba. Execution Duration: {execution_duration}ms\n"
                 f"Response Content: {response_data}\n"
                 "-------------------------------------------\n"
             )
+            # Define the API endpoint where you want to forward the request
+            textContent=f"Alert Screener MTCoba:Any alert() function call \n{log_message}"
+            params={
+               "chat_id": f"{os.getenv('CHAT_ID')}",
+               "text": textContent
+            }
+            
+            responseA = requests.get(
+                tele_url,
+                params=params
+            )
+            print(responseA.json())
             headers2 = {
                 'Accept': 'application/json',
                 'Content-Type':'application/json'
